@@ -20,9 +20,13 @@ clear architecture, reproducibility, and extensibility.
 
 ## Project Structure
 soc-log-analyzer/
+
 ├── src/ # Application source code
+
 ├── data/ # Sample logs and datasets
+
 ├── tests/ # Automated tests
+
 └── README.md
 
 
