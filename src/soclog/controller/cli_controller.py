@@ -1,6 +1,6 @@
 import argparse
 
-from soclog.io.log_loader import LogLoader
+from soclog.io.log_loader import LogLoader, LogValidationError
 from soclog.normalize.event_normalizer import EventNormalizer
 from soclog.detect.engine import DetectionEngine
 from soclog.report.report_generator import ReportGenerator
@@ -30,11 +30,10 @@ class CLIController:
         p.add_argument("--no-pause", action="store_true", help="Do not pause between screens")
 
         return parser
+ 
 
     # To run from root:
-    # cd src
-    # python -m soclog.main wizard
-
+    # python -m src.soclog.main wizard
     def _wizard_flow(self, no_pause=False):
         pause = not no_pause
 
@@ -48,17 +47,55 @@ class CLIController:
 
         # Import Logs
         self._header("Import Logs")
-        log_path = input("\nEnter path to log file: ").strip()
-        source_type = input("Enter source type (Windows/Linux): ").strip()
-        log_format = input("Enter format (CSV/JSON/JSONL): ").strip()
 
-        # Call into LogLoader module
-        raw_events = loader.load(log_path)
+        while True:
+            log_path = input("\nEnter path to log file: ").strip()
+            source_type = input("Enter source type (Windows/Linux): ").strip()
 
-        print(f"(CLI) Captured: source='{source_type}', format='{log_format}'")
+            # Normalize source type
+            src = (source_type or "").strip().lower()
+            if src in ("win", "windows"):
+                src = "windows"
+            elif src == "linux":
+                src = "linux"
+            else:
+                src = source_type.strip()
+
+            try:
+                # Use fmt if provided; otherwise auto-detect
+                raw_events = list(loader.load(log_path))
+
+                if not raw_events:
+                    print("(CLI) No records found in file.\n")
+                    retry = input("Try another file? (y/n): ").strip().lower()
+                    if retry != "y":
+                        return
+                    continue
+
+                break
+
+            except LogValidationError as e:
+                print(f"(CLI) Validation failed: {e}\n")
+                retry = input("Try another file? (y/n): ").strip().lower()
+                if retry != "y":
+                    return
+
+            except FileNotFoundError as e:
+                print(f"(CLI) File error: {e}\n")
+                retry = input("Try another file? (y/n): ").strip().lower()
+                if retry != "y":
+                    return
+
+            except Exception as e:
+                print(f"(CLI) Unexpected error: {e}\n")
+                return
+
+        print(f"(CLI) Captured: source='{src}', format='{'auto'}'")
+        print(f"(CLI) Loaded records: {len(raw_events)}")
         print("(CLI) Status: OK\n")
         self._pause(pause)
         print("\n")
+
 
         # Normalization
         self._header("Normalization")
