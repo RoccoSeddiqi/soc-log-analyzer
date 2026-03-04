@@ -33,6 +33,7 @@ class CLIController:
  
 
     # To run from root:
+    # $env:PYTHONPATH="src"
     # python -m src.soclog.main wizard
     def _wizard_flow(self, no_pause=False):
         pause = not no_pause
@@ -52,7 +53,6 @@ class CLIController:
             log_path = input("\nEnter path to log file: ").strip()
             source_type = input("Enter source type (Windows/Linux): ").strip()
 
-            # Normalize source type
             src = (source_type or "").strip().lower()
             if src in ("win", "windows"):
                 src = "windows"
@@ -62,7 +62,6 @@ class CLIController:
                 src = source_type.strip()
 
             try:
-                # Use fmt if provided; otherwise auto-detect
                 raw_events = list(loader.load(log_path))
 
                 if not raw_events:
@@ -99,19 +98,51 @@ class CLIController:
 
         # Normalization
         self._header("Normalization")
-        normalize_mode = input("\nNormalize mode (default/basic/strict): ").strip()
-        drop_missing = input("Drop missing fields? (y/n): ").strip()
 
-        # Call into EventNormalizer module
-        validation = normalizer.validate(raw_events)
-        normalized_events = normalizer.normalize(raw_events)
+        normalize_mode = input("\nNormalize mode (default/basic/strict): ").strip() or "default"
+        drop_missing_input = input("Drop missing fields? (y/n): ").strip().lower()
+        drop_missing = drop_missing_input == "y"
+
+        validation = normalizer.validate(raw_events, mode=normalize_mode)
+
+        normalized_events, norm_summary = normalizer.normalize(
+            raw_events,
+            mode=normalize_mode,
+            drop_missing=drop_missing,
+            source=src,
+            keep_raw=False
+        )
 
         print(f"(CLI) Captured: normalize_mode='{normalize_mode}', drop_missing='{drop_missing}'")
-        print(f"(CLI) Validation result: {validation}\n")
+        print(f"(CLI) Validation: total={validation.total_records}, valid={validation.valid_records}, warnings={validation.warnings}, errors={validation.errors}")
+
         print("(CLI) Normalization Results:")
-        print("- Total records: 12,487")
-        print("- Normalized: 12,120")
-        print("- Warnings: 367\n")
+        print(f"- Total records: {norm_summary.total_records}")
+        print(f"- Normalized: {norm_summary.normalized}")
+        print(f"- Dropped: {norm_summary.dropped}")
+        print(f"- Warnings: {norm_summary.warnings}")
+        print(f"- Errors: {norm_summary.errors}\n")
+
+        if norm_summary.issues:
+            print("(CLI) Sample issues:")
+            for issue in norm_summary.issues[:5]:
+                field = f" field={issue.field}" if issue.field else ""
+                print(f"  - [{issue.level.upper()}] {issue.code}{field} @event#{issue.event_index}: {issue.message}")
+            print()
+
+        # Show example normalized output for demo purposes
+        if normalized_events:
+            print("(CLI) Sample normalized event:")
+            print(normalized_events[0])
+            print()
+
+            # Optional: show a few more
+            print("(CLI) First 3 normalized events:")
+            for evt in normalized_events[:3]:
+                print(evt)
+            print()
+        # Show example normalized output for demo purposes
+
         self._pause(pause)
         print("\n")
 
@@ -128,9 +159,8 @@ class CLIController:
 
         print(f"(CLI) Captured: profile='{profile}', rule_pack='{rule_pack}'")
         print("(CLI) Detection Run Completed:")
-        print("- Events analyzed: 12,120")
-        print("- Rules applied: 6")
-        print("- Alerts generated: 42\n")
+        print(f"- Events analyzed: {len(normalized_events)}")
+        print(f"- Alerts generated: {len(alerts)}")
         self._pause(pause)
         print("\n")
 
