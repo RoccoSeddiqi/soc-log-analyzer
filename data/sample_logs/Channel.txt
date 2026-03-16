@@ -1,0 +1,3 @@
+Channel
+Security                                1629
+Microsoft-Windows-Sysmon/Operational     766

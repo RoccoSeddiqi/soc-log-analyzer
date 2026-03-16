@@ -1,0 +1,4 @@
+Signature
+Microsoft Windows             241
+Python Software Foundation     12
+Microsoft Corporation           1

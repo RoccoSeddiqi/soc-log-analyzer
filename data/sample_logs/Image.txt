@@ -1,0 +1,10 @@
+Image
+C:\Windows\System32\netsh.exe                                        213
+C:\Users\wardog\AppData\Local\Programs\Python\Python39\python.exe     51
+C:\windows\system32\svchost.exe                                       15
+C:\windows\system32\lsass.exe                                         12
+C:\windows\Explorer.EXE                                                9
+C:\windows\system32\netsh.exe                                          8
+C:\windows\System32\svchost.exe                                        3
+C:\windows\system32\dashost.exe                                        2
+C:\windows\system32\SecurityHealthService.exe                          2

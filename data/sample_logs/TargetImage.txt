@@ -1,0 +1,43 @@
+TargetImage
+C:\windows\system32\svchost.exe                                                                                    148
+C:\windows\System32\svchost.exe                                                                                     93
+C:\windows\system32\SecurityHealthService.exe                                                                       52
+C:\Windows\SystemApps\InputApp_cw5n1h2txyewy\WindowsInternal.ComposableShell.Experiences.TextInput.InputApp.exe     24
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe                                                           23
+C:\windows\system32\backgroundTaskHost.exe                                                                          21
+C:\windows\system32\netsh.exe                                                                                       20
+C:\windows\system32\conhost.exe                                                                                     16
+C:\Windows\System32\RuntimeBroker.exe                                                                                6
+C:\Users\wardog\AppData\Local\Programs\Python\Python39\python.exe                                                    4
+C:\windows\system32\csrss.exe                                                                                        3
+C:\windows\system32\fontdrvhost.exe                                                                                  3
+C:\windows\system32\taskhostw.exe                                                                                    3
+C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe                                                            3
+C:\windows\system32\winlogon.exe                                                                                     2
+C:\windows\system32\dwm.exe                                                                                          2
+C:\windows\Sysmon.exe                                                                                                2
+C:\windows\system32\DllHost.exe                                                                                      2
+C:\windows\System32\smss.exe                                                                                         1
+C:\windows\system32\wininit.exe                                                                                      1
+C:\windows\system32\services.exe                                                                                     1
+C:\windows\system32\lsass.exe                                                                                        1
+C:\windows\system32\LogonUI.exe                                                                                      1
+C:\windows\system32\vssvc.exe                                                                                        1
+C:\windows\System32\spoolsv.exe                                                                                      1
+C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2009.7-0\MsMpEng.exe                                         1
+C:\windows\system32\wbem\unsecapp.exe                                                                                1
+C:\windows\system32\dashost.exe                                                                                      1
+C:\windows\System32\rdpclip.exe                                                                                      1
+C:\windows\system32\sihost.exe                                                                                       1
+C:\windows\system32\ctfmon.exe                                                                                       1
+C:\windows\Explorer.EXE                                                                                              1
+C:\windows\system32\SgrmBroker.exe                                                                                   1
+C:\windows\system32\SearchIndexer.exe                                                                                1
+C:\Windows\System32\SecurityHealthSystray.exe                                                                        1
+C:\windows\system32\ApplicationFrameHost.exe                                                                         1
+C:\Windows\System32\SecurityHealthHost.exe                                                                           1
+C:\Windows\System32\smartscreen.exe                                                                                  1
+C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2009.7-0\NisSrv.exe                                          1
+C:\Windows\System32\WUDFHost.exe                                                                                     1
+C:\windows\system32\AUDIODG.EXE                                                                                      1
+C:\windows\system32\wbem\wmiprvse.exe                                                                                1

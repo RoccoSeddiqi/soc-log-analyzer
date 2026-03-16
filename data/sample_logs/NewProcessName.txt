@@ -1,0 +1,3 @@
+NewProcessName
+C:\Windows\System32\netsh.exe                                        2
+C:\Users\wardog\AppData\Local\Programs\Python\Python39\python.exe    1

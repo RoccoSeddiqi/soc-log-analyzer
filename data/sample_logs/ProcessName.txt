@@ -1,0 +1,5 @@
+ProcessName
+C:\Windows\System32\svchost.exe                                      1252
+C:\Windows\System32\netsh.exe                                          26
+C:\Windows\System32\services.exe                                        4
+C:\Users\wardog\AppData\Local\Programs\Python\Python39\python.exe       4
