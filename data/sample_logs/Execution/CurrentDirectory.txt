@@ -1,0 +1,2 @@
+CurrentDirectory
+C:\Users\wardog\    3

@@ -1,0 +1,4 @@
+Application
+\device\harddiskvolume2\windowsazure\guestagent_2.7.41491.993_2020-10-08_063613\waappagent.exe    4
+\device\harddiskvolume2\users\wardog\appdata\local\programs\python\python39\python.exe            3
+\device\harddiskvolume2\windows\system32\svchost.exe                                              2

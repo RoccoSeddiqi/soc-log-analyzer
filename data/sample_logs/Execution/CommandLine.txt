@@ -1,0 +1,4 @@
+CommandLine
+"C:\windows\system32\netsh.exe" advfirewall firewall add rule name=python.exe dir=in action=allow description=python.exe program=C:\users\wardog\appdata\local\programs\python\python39\python.exe enable=yes localport=any protocol=tcp remoteip=any    2
+"C:\windows\system32\netsh.exe" advfirewall firewall add rule name=python.exe dir=in action=allow description=python.exe program=C:\users\wardog\appdata\local\programs\python\python39\python.exe enable=yes localport=any protocol=udp remoteip=any    2
+"C:\Users\wardog\AppData\Local\Programs\Python\Python39\python.exe" -m http.server 8000                                                                                                                                                                  2

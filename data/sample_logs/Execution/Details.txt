@@ -1,0 +1,11 @@
+Details
+Binary Data                                                                                                                                                 9
+QWORD (0x01d6adb2-0xa6c0295f)                                                                                                                               2
+QWORD (0x01d6adaa-0x44fbc15f)                                                                                                                               2
+QWORD (0x01d6ada1-0xe337595f)                                                                                                                               2
+QWORD (0x00000000-0x37ec4871)                                                                                                                               2
+DWORD (0x00000006)                                                                                                                                          2
+v2.30|Action=Allow|Active=TRUE|Dir=In|Protocol=6|App=C:\users\wardog\appdata\local\programs\python\python39\python.exe|Name=python.exe|Desc=python.exe|     1
+DWORD (0x0000030b)                                                                                                                                          1
+v2.30|Action=Allow|Active=TRUE|Dir=In|Protocol=17|App=C:\users\wardog\appdata\local\programs\python\python39\python.exe|Name=python.exe|Desc=python.exe|    1
+DWORD (0x0000030c)                                                                                                                                          1

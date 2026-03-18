@@ -1,0 +1,7 @@
+SourceImage
+C:\windows\system32\svchost.exe                              412
+C:\windows\Explorer.EXE                                       26
+C:\windows\System32\svchost.exe                                4
+C:\windows\system32\csrss.exe                                  3
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe      3
+C:\windows\system32\conhost.exe                                3

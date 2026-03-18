@@ -1,0 +1,11 @@
+LayerName
+%%14608                             4
+%%14611                             2
+ALE Receive/Accept v4 Layer         2
+ALE Receive/Accept v6 Layer         2
+%%14610                             2
+ALE Listen v6 Layer                 1
+ALE Listen v4 Layer                 1
+ALE Resource Assignment v4 Layer    1
+ALE Resource Assignment v6 Layer    1
+%%14609                             1
