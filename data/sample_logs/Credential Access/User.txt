@@ -1,0 +1,4 @@
+User
+NT AUTHORITY\SYSTEM             53
+THESHIRE\pgustavo               36
+NT AUTHORITY\NETWORK SERVICE     2

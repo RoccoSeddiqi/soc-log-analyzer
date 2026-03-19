@@ -1,0 +1,8 @@
+EventType
+INFO             5118
+AUDIT_SUCCESS     696
+CreateKey         154
+SetValue           45
+AUDIT_FAILURE       6
+ConnectPipe         5
+CreatePipe          2

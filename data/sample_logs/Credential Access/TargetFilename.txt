@@ -1,0 +1,8 @@
+TargetFilename
+C:\Windows\ServiceState\EventLog\Data\lastalive0.dat                                             5
+C:\Windows\ServiceState\EventLog\Data\lastalive1.dat                                             4
+C:\Windows\System32\Configuration\DSCEngineCache.mof                                             1
+C:\Windows\System32\Configuration\DSCResourceStateCache.mof                                      1
+C:\Windows\Prefetch\WHOAMI.EXE-B8288E39.pf                                                       1
+C:\System Volume Information\DFSR\Config\Replica_ED16C134-8473-46E3-B7D2-B88531A53D73.XML.TMP    1
+C:\System Volume Information\DFSR\Config\Volume_20415B9F-0000-0000-0000-501F00000000.XML.TMP     1

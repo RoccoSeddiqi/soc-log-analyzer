@@ -1,0 +1,30 @@
+Details
+DWORD (0x00000000)                                                                               8
+Binary Data                                                                                      6
+DWORD (0x00000001)                                                                               3
+DWORD (0x01d66cc7)                                                                               2
+QWORD (0x01d66cc7-0x27d2efb3)                                                                    2
+QWORD (0x00000000-0x01400000)                                                                    1
+QWORD (0x01d66b93-0x7767cd93)                                                                    1
+\\MORDORDC.theshire.local                                                                        1
+QWORD (0x01d66cc7-0x75d0335a)                                                                    1
+xy02pjxoadnuxctotb3ij2ly5b.bx.internal.cloudapp.net                                              1
+HAM                                                                                              1
+QWORD (0x01d66cc7-0x9d084c59)                                                                    1
+DWORD (0x00000004)                                                                               1
+DWORD (0x00000007)                                                                               1
+MORDORDC                                                                                         1
+THESHIRE\MORDORDC$                                                                               1
+{00000000-0000-0000-0000-000000000000}                                                           1
+DWORD (0x9e504fd7)                                                                               1
+DWORD (0x9e6364a5)                                                                               1
+QWORD (0x01d66cc7-0xa669cfb3)                                                                    1
+QWORD (0x01d66cc7-0xa6673f83)                                                                    1
+QWORD (0x00000000-0x00000000)                                                                    1
+QWORD (0x01d66cc7-0x277f89c4)                                                                    1
+QWORD (0x01d66cc7-0xca294a3c)                                                                    1
+QWORD (0x01d66cc7-0xca29971e)                                                                    1
+\\?\C:\System Volume Information\DFSR\Config\Replica_ED16C134-8473-46E3-B7D2-B88531A53D73.XML    1
+\\.\C:\System Volume Information\DFSR\Config\Volume_20415B9F-0000-0000-0000-501F00000000.XML     1
+QWORD (0x01d66cc7-0xedecac86)                                                                    1
+QWORD (0x01d66cc7-0xedec9174)                                                                    1

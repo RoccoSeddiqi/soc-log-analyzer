@@ -1,0 +1,6 @@
+ObjectType
+Key                  84
+SC_MANAGER OBJECT     6
+File                  3
+Process               2
+Token                 1

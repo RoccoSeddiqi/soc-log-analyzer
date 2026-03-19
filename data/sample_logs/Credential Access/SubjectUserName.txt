@@ -1,0 +1,7 @@
+SubjectUserName
+LOCAL SERVICE    168
+MORDORDC$         61
+-                 20
+pgustavo          20
+WORKSTATION5$     14
+WORKSTATION6$      3

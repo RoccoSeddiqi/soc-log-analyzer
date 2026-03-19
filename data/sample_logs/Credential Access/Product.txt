@@ -1,0 +1,4 @@
+Product
+Microsoft® Windows® Operating System          79
+Microsoft (R) Windows (R) Operating System     2
+Microsoft® .NET Framework                      1

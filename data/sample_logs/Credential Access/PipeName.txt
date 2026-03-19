@@ -1,0 +1,3 @@
+PipeName
+&lt;Anonymous Pipe&gt;    4
+\lsass                    3

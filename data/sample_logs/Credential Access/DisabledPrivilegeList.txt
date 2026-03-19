@@ -1,0 +1,2 @@
+DisabledPrivilegeList
+-    13

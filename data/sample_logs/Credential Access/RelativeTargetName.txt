@@ -1,0 +1,3 @@
+RelativeTargetName
+theshire.local\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\gpt.ini    1
+theshire.local\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\gpt.ini    1

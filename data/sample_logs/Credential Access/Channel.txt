@@ -1,0 +1,6 @@
+Channel
+Windows PowerShell                            2949
+Microsoft-Windows-PowerShell/Operational      1695
+Security                                       702
+Microsoft-Windows-Sysmon/Operational           679
+Microsoft-Windows-WMI-Activity/Operational       1
