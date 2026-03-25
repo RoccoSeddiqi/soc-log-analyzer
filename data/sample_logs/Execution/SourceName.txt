@@ -1,0 +1,4 @@
+SourceName
+Microsoft-Windows-Security-Auditing    1628
+Microsoft-Windows-Sysmon                766
+Microsoft-Windows-Eventlog                1

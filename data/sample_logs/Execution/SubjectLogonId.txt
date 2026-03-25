@@ -1,0 +1,4 @@
+SubjectLogonId
+0x3e5      1565
+0xc61d9      40
+0x3e7         4

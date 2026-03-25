@@ -1,0 +1,21 @@
+Category
+Pipeline Execution Details       2940
+Executing Pipeline               1695
+Filtering Platform Connection     406
+Registry                          169
+Handle Manipulation                43
+Token Right Adjusted Events        13
+Process Termination                11
+Special Logon                      10
+Logon                              10
+Logoff                             10
+Group Membership                   10
+Provider Lifecycle                  8
+Other Object Access Events          6
+Sensitive Privilege Use             6
+Kernel Object                       3
+Detailed File Share                 2
+Engine Lifecycle                    1
+Process Creation                    1
+File Share                          1
+Authorization Policy Change         1

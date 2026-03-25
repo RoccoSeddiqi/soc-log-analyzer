@@ -1,0 +1,2 @@
+TargetLinkedLogonId
+0x0    10

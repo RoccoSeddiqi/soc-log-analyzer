@@ -1,0 +1,4 @@
+SubjectDomainName
+NT AUTHORITY    1565
+WORKSTATION5      40
+WORKGROUP          4

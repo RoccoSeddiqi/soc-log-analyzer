@@ -1,0 +1,2 @@
+host
+wec.internal.cloudapp.net    6026

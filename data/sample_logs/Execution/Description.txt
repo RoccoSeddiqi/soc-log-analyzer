@@ -1,0 +1,108 @@
+Description
+Python Core                                                              8
+Microsoft® C Runtime Library                                             7
+Windows NT BASE API Client DLL                                           6
+Windows Cryptographic Primitives Library                                 6
+GDI Client DLL                                                           6
+Network Command Shell                                                    4
+Event Trace Helper Library                                               4
+Software Licensing Client Dll                                            4
+NT Layer DLL                                                             3
+Windows NT CRT DLL                                                       3
+Remote Procedure Call Runtime                                            3
+Windows Socket 2.0 32-Bit DLL                                            3
+IP Helper API                                                            3
+Advanced Windows 32 Base API                                             3
+Host for SCM/SDDL/LSA Lookup APIs                                        3
+Multi-User Windows USER API Client DLL                                   3
+Win32u                                                                   3
+Multi-User Windows IMM32 API Client DLL                                  3
+NSI User-mode interface DLL                                              3
+DNS Client API DLL                                                       3
+Cryptographic Service Provider API                                       3
+Network Location Awareness 2                                             3
+Crypto API32                                                             3
+ASN.1 Runtime APIs                                                       3
+ADs LDAP Provider C DLL                                                  3
+Base cryptographic API DLL                                               3
+Microsoft Windows Sockets 2.0 Service Provider                           3
+OpenSSL library                                                          3
+OLEAUT32.DLL                                                             2
+Microsoft COM for Windows                                                2
+AppModel API Host                                                        2
+IF Monitor DLL                                                           2
+Configuration Manager DLL                                                2
+Windows NT MP Router Administration DLL                                  2
+RAS Monitor DLL                                                          2
+Remote Access API                                                        2
+FWP/IPsec User-Mode API                                                  2
+Remote Access Connection Manager                                         2
+Microsoft OLE for Windows                                                2
+MFCDLL Shared Library - Retail Version                                   2
+FwPolicyIoMgr DLL                                                        2
+Windows Defender Firewall with Advanced Security Configuration Helper    2
+Windows Defender Firewall API                                            2
+Firewall Base DLL                                                        2
+DHCP Client Monitor Dll                                                  2
+DHCP Client Service                                                      2
+DHCPv6 Client                                                            2
+802.3 Netsh Helper                                                       2
+802.3 Autoconfiguration API                                              2
+IEEE 802.1X supplicant library                                           2
+Windows NCrypt Router                                                    2
+Eap Peer Config                                                          2
+Microsoft EAPHost Peer Client DLL                                        2
+Microsoft ASN.1 API                                                      2
+Windows Defender Firewall Configuration Helper                           2
+Home Networking Monitor DLL                                              2
+Network Connections Shell                                                2
+Shell Light-weight Utility Library                                       2
+Windows Shell Common Dll                                                 2
+SHCORE                                                                   2
+Microsoft WinRT Storage API                                              2
+User Profile Basic API                                                   2
+Power Profile Helper DLL                                                 2
+-                                                                        2
+Netio Helper DLL                                                         2
+Network Store Information RPC interface                                  2
+Network Trace Helper                                                     2
+Security Support Provider Interface                                      2
+Eventing Consumption and Configuration API                               2
+Network Diagnostic Framework Client API                                  2
+Windows Diagnostic Infrastructure                                        2
+HTTP netsh DLL                                                           2
+HTTP Protocol Stack API                                                  2
+Net Shell IP Security helper DLL                                         2
+Userenv                                                                  2
+ADs Router Layer DLL                                                     2
+Win32 LDAP API DLL                                                       2
+Windows IPsec SPD Client DLL                                             2
+Policy Storage dll                                                       2
+Windows Filtering Platform Netsh Helper                                  2
+Peer-to-Peer NetSh Helper                                                2
+Microsoft® Cabinet File API                                              2
+Peer-to-Peer Grouping                                                    2
+RPC Netshell Helper                                                      2
+WCN Netsh Helper DLL                                                     2
+Windows WLAN AutoConfig Client Side API DLL                              2
+Net shell helper DLL for winHttp                                         2
+Windows HTTP Services                                                    2
+Wlan Netsh Helper DLL                                                    2
+Winsock Net shell helper DLL for winsock                                 2
+MBN Netsh Helper DLL                                                     2
+WWAN API                                                                 2
+Windows Connection Manager Client API                                    2
+Resource Manager Client                                                  2
+"MobileNetworking.DYNLINK"                                               2
+BranchCache Netshell Helper                                              2
+Microsoft UxTheme Library                                                2
+Group Policy Client API                                                  2
+Windows KTM Win32 Client DLL                                             2
+Multi-Protocol Router Service Messages DLL                               2
+Python                                                                   2
+Version Checking and File Installation Libraries                         1
+Microsoft Enhanced Cryptographic Provider                                1
+E-mail Naming Shim Provider                                              1
+PNRP Name Space Provider                                                 1
+LDAP RnR Provider DLL                                                    1
+Windows Sockets Helper DLL                                               1

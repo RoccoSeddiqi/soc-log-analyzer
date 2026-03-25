@@ -1,0 +1,7 @@
+Product
+Microsoft® Windows® Operating System    239
+Python                                   10
+The OpenSSL Toolkit                       3
+Microsoft (R) Visual C++                  2
+-                                         2
+Microsoft® Visual Studio®                 1

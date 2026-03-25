@@ -1,0 +1,2 @@
+QueryResults
+type:  12 WORKSTATION5;    1

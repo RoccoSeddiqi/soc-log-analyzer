@@ -1,0 +1,5 @@
+Company
+Microsoft Corporation                            242
+Python Software Foundation                        10
+The OpenSSL Project, https://www.openssl.org/      3
+-                                                  2

@@ -1,0 +1,2 @@
+ShareName
+\\*\SYSVOL    3

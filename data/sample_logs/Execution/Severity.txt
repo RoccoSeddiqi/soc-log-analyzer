@@ -1,0 +1,3 @@
+Severity
+INFO     6020
+ERROR       6

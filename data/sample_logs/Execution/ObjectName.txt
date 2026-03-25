@@ -1,0 +1,4 @@
+ObjectName
+\REGISTRY\MACHINE\SYSTEM\ControlSet001\Control\Lsa                         620
+\REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon     20
+IKEEXT                                                                       2

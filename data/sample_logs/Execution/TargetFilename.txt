@@ -1,0 +1,4 @@
+TargetFilename
+C:\Windows\Prefetch\NETSH.EXE-F1B6DA12.pf               2
+C:\Windows\Prefetch\PYTHON.EXE-F52F66E0.pf              1
+C:\Windows\ServiceState\EventLog\Data\lastalive1.dat    1
