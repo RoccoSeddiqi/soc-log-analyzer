@@ -1,0 +1,11 @@
+Application
+\device\harddiskvolume2\windows\system32\lsass.exe                                                                                                           160
+\device\harddiskvolume2\packages\plugins\microsoft.azure.networkwatcher.networkwatcheragentwindows\1.4.1587.1\networkwatcheragent\networkwatcheragent.exe     72
+\device\harddiskvolume2\windows\system32\windowspowershell\v1.0\powershell.exe                                                                                70
+\device\harddiskvolume2\windows\system32\svchost.exe                                                                                                          47
+\device\harddiskvolume2\windows\system32\dns.exe                                                                                                              32
+\device\harddiskvolume2\windows\adws\microsoft.activedirectory.webservices.exe                                                                                 6
+\device\harddiskvolume2\windowsazure\packages\guestagent\windowsazureguestagent.exe                                                                            6
+\device\harddiskvolume2\windows\system32\dfsrs.exe                                                                                                             6
+System                                                                                                                                                         5
+\device\harddiskvolume2\windowsazure\secagent\wasecagentprov.exe                                                                                               2

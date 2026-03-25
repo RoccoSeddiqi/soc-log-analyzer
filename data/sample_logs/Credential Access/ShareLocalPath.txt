@@ -1,0 +1,2 @@
+ShareLocalPath
+\??\C:\SYSVOL\sysvol    3

@@ -1,0 +1,2 @@
+CurrentDirectory
+C:\windows\system32\    1

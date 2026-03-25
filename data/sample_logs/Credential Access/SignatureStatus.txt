@@ -1,0 +1,3 @@
+SignatureStatus
+Valid          78
+Unavailable     3

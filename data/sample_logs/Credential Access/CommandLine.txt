@@ -1,0 +1,2 @@
+CommandLine
+"C:\windows\system32\whoami.exe" /user    2

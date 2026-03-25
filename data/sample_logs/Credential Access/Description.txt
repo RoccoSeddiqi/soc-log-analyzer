@@ -1,0 +1,46 @@
+Description
+WMI                                                                 9
+Data Protection API                                                 9
+Performance Counters                                                9
+Windows System Performance Objects DLL                              4
+whoami - displays logged on user information                        2
+Microsoft® C Runtime Library                                        2
+Windows Cryptographic Primitives Library                            2
+WMI DC and DP functionality                                         2
+Net Win32 API Helpers DLL                                           2
+GDI Client DLL                                                      2
+Workstation Service Client DLL                                      2
+Windows NT BASE API Client DLL                                      2
+NT Layer DLL                                                        1
+Win32u                                                              1
+Multi-User Windows USER API Client DLL                              1
+Remote Procedure Call Runtime                                       1
+Host for SCM/SDDL/LSA Lookup APIs                                   1
+Advanced Windows 32 Base API                                        1
+Windows NT CRT DLL                                                  1
+Microsoft.Management.Infrastructure.Native.dll                      1
+Microsoft COM for Windows                                           1
+Security Support Provider Interface                                 1
+Version Checking and File Installation Libraries                    1
+Shell Light-weight Utility Library                                  1
+Multi-User Windows IMM32 API Client DLL                             1
+Authorization Framework                                             1
+WMI Client API                                                      1
+Microsoft® Cabinet File API                                         1
+Windows Socket 2.0 32-Bit DLL                                       1
+Cryptography Manager                                                1
+Server Service Client DLL                                           1
+Net Win32 API DLL                                                   1
+Filter Library                                                      1
+Hid User Library                                                    1
+SAM Library DLL                                                     1
+Microsoft Smart Card API                                            1
+Net Logon Client DLL                                                1
+Device Information Set DLL                                          1
+Windows Setup API                                                   1
+Microsoft Enhanced DSS and Diffie-Hellman Cryptographic Provider    1
+Credential Vault Client Library                                     1
+Windows Base Types DLL                                              1
+Win32 LDAP API DLL                                                  1
+Winstation Library                                                  1
+Dia based SymReader                                                 1

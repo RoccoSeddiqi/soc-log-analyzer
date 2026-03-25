@@ -1,0 +1,3 @@
+AccountType
+User                2374
+Well Known Group       1

@@ -1,0 +1,25 @@
+Image
+C:\windows\system32\svchost.exe                              75
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe    58
+C:\windows\system32\lsass.exe                                46
+C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe    44
+C:\Windows\System32\svchost.exe                              37
+C:\windows\System32\svchost.exe                              31
+C:\Windows\System32\dns.exe                                  31
+C:\Windows\System32\whoami.exe                               27
+C:\Windows\System32\lsass.exe                                14
+C:\windows\system32\DFSRs.exe                                 9
+C:\Windows\System32\wbem\WmiPrvSE.exe                         8
+C:\windows\ADWS\Microsoft.ActiveDirectory.WebServices.exe     6
+C:\windows\Explorer.EXE                                       4
+C:\Windows\ADWS\Microsoft.ActiveDirectory.WebServices.exe     3
+C:\Windows\System32\dfsrs.exe                                 3
+C:\windows\system32\wbem\wmiprvse.exe                         2
+System                                                        2
+C:\Windows\System32\SearchProtocolHost.exe                    1
+C:\Windows\System32\SearchFilterHost.exe                      1
+C:\Windows\System32\backgroundTaskHost.exe                    1
+C:\windows\system32\backgroundTaskHost.exe                    1
+C:\Windows\System32\audiodg.exe                               1
+C:\windows\system32\SearchIndexer.exe                         1
+C:\windows\system32\dns.exe                                   1

@@ -1,0 +1,4 @@
+Hostname
+WORKSTATION5.theshire.local    5188
+MORDORDC.theshire.local         528
+WORKSTATION6.theshire.local     310

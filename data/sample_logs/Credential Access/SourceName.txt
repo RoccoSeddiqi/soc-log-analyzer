@@ -1,0 +1,6 @@
+SourceName
+PowerShell                             2949
+Microsoft-Windows-PowerShell           1695
+Microsoft-Windows-Security-Auditing     702
+Microsoft-Windows-Sysmon                679
+Microsoft-Windows-WMI-Activity            1

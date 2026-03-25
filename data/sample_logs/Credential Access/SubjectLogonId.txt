@@ -1,0 +1,17 @@
+SubjectLogonId
+0x3e5        168
+0x3e7         63
+0x0           20
+0x2ba622      18
+0x2b6bd63      4
+0x3e4          2
+0x2bc327       2
+0x2b6b6c5      1
+0x2b6bce7      1
+0x2b6bb78      1
+0x2b6bc9c      1
+0x2b6db78      1
+0x2b6e52e      1
+0x2b7035e      1
+0x2b703cf      1
+0x2b7061c      1

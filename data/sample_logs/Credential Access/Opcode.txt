@@ -1,0 +1,3 @@
+Opcode
+Info                                                    3652
+To be used when operation is just executing a method    1695

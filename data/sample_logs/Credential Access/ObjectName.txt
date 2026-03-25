@@ -1,0 +1,7 @@
+ObjectName
+\REGISTRY\MACHINE\SYSTEM\ControlSet001\Control\Lsa                            66
+\REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon       16
+ServicesActive                                                                 6
+\REGISTRY\MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment     2
+\Device\HarddiskVolume2\Windows\System32\lsass.exe                             2
+-                                                                              1

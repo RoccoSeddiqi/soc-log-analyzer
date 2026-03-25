@@ -1,0 +1,4 @@
+SubjectDomainName
+NT AUTHORITY    168
+THESHIRE         98
+-                20

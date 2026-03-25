@@ -1,0 +1,12 @@
+ProcessName
+C:\Windows\System32\svchost.exe                              178
+-                                                             10
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe      9
+C:\Windows\System32\services.exe                               6
+C:\Windows\System32\whoami.exe                                 5
+C:\Windows\System32\wbem\WmiPrvSE.exe                          5
+C:\Windows\System32\audiodg.exe                                2
+C:\Windows\System32\SearchFilterHost.exe                       1
+C:\Windows\System32\SearchProtocolHost.exe                     1
+C:\Windows\System32\backgroundTaskHost.exe                     1
+C:\Windows\System32\lsass.exe                                  1

@@ -1,0 +1,4 @@
+Signature
+Microsoft Windows        77
+-                         3
+Microsoft Corporation     1
