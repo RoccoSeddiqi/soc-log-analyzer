@@ -1,4 +1,5 @@
 import argparse
+import json
 
 from soclog.io.log_loader import LogLoader, LogValidationError
 from soclog.normalize.event_normalizer import EventNormalizer
@@ -130,18 +131,18 @@ class CLIController:
                 print(f"  - [{issue.level.upper()}] {issue.code}{field} @event#{issue.event_index}: {issue.message}")
             print()
 
-        # Show example normalized output for demo purposes
-        if normalized_events:
-            print("(CLI) Sample normalized event:")
-            print(normalized_events[0])
+        # Show example normalized output for testing purposes
+        count = min(2, len(normalized_events))
+
+        for i in range(count):
+            print(f"(CLI) Raw event #{i} (before normalization):")
+            print(json.dumps(raw_events[i], indent=2, default=str))
             print()
 
-            # Optional: show a few more
-            print("(CLI) First 3 normalized events:")
-            for evt in normalized_events[:3]:
-                print(evt)
+            print(f"(CLI) Normalized event #{i} (after normalization):")
+            print(json.dumps(normalized_events[i], indent=2, default=str))
             print()
-        # Show example normalized output for demo purposes
+        # Show example normalized output for testing purposes
 
         self._pause(pause)
         print("\n")
@@ -149,11 +150,9 @@ class CLIController:
 
         # Detection
         self._header("Detection Run")
-        profile = input("Select profile (basic/extended): ").strip()
-        rule_pack = input("Select rule category (execution/credential_access/etc/): ").strip()
+        profile = input("Select profile (basic/extended): ").strip().lower() or "basic"
+        rule_pack = input("Select rule category (execution/credential_access/etc/): ").strip().lower() or "execution"
 
-        # Call into DetectionEngine module (prints from detect/engine.py)
-        # config is still placeholder for now
         config = {"profile": profile, "rule_pack": rule_pack}
         alerts = engine.run(normalized_events, config)
 
@@ -164,16 +163,26 @@ class CLIController:
         self._pause(pause)
         print("\n")
 
+        
         # Alerts Review
         self._header("Alerts Review")
-        print("Alerts (demo sample):")
-        print("A01 | HIGH   | Brute Force Window")
-        print("A02 | MEDIUM | Success After Failures")
-        print("A03 | LOW    | Unusual Hour Login\n")
 
-        action = input("Type 'show A01' to continue: ").strip()
-        if action.lower().startswith("show"):
-            self._alert_details_demo()
+        if not alerts:
+            print("No alerts generated.\n")
+        else:
+            for idx, alert in enumerate(alerts, start=1):
+                print(f"A{idx:02d} | {alert['severity']:<6} | {alert['rule_name']}")
+
+            print()
+            action = input("Type 'show A01' to continue: ").strip().lower()
+
+            if action.startswith("show"):
+                try:
+                    alert_num = int(action.split()[1][1:]) - 1
+                    if 0 <= alert_num < len(alerts):
+                        self._show_alert_details(alerts[alert_num], alert_num + 1)
+                except (IndexError, ValueError):
+                    print("Invalid alert selection.\n")
 
         self._pause(pause)
         print("\n")
@@ -227,16 +236,16 @@ class CLIController:
         if enabled:
             input("Press Enter to continue...")
 
-    def _alert_details_demo(self):
+    def _show_alert_details(self, alert, alert_number):
         print("-" * 60)
-        print("Alert Details (demo)")
+        print(f"Alert Details (A{alert_number:02d})")
         print("-" * 60)
-        print("Alert ID: A01")
-        print("Rule: Brute Force Window")
-        print("Severity: HIGH")
-        print("Host: WS-01")
-        print("User: admin")
-        print("Source IP: 10.0.0.200")
-        print("Evidence: 12 failed logins within 2 minutes")
+        print(f"Rule: {alert.get('rule_name')}")
+        print(f"Severity: {alert.get('severity')}")
+        print(f"Category: {alert.get('category')}")
+        print(f"Summary: {alert.get('summary')}")
+        print(f"Host: {alert.get('host')}")
+        print(f"User: {alert.get('user')}")
+        print(f"Matched Indicators: {', '.join(alert.get('matched_indicators', []))}")
         print("-" * 60)
         print()
