@@ -1,0 +1,24 @@
+{
+  "total_alerts": 1,
+  "severity_counts": {
+    "HIGH": 1
+  },
+  "category_counts": {
+    "execution": 1
+  },
+  "rule_counts": {
+    "python_http_server_execution": 1
+  },
+  "alerts": [
+    {
+      "rule_name": "python_http_server_execution",
+      "severity": "HIGH",
+      "category": "execution",
+      "summary": "python http server behavior",
+      "host": "WORKSTATION5",
+      "user": "wardog",
+      "command_line": "\"C:\\Users\\wardog\\AppData\\Local\\Programs\\Python\\Python39\\python.exe\" -m http.server 8000",
+      "event_id": "4688"
+    }
+  ]
+}
