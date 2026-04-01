@@ -191,21 +191,48 @@ class CLIController:
         # Summary Report + Export
         self._header("Summary Report / Export")
         out_dir = input("Enter output folder: ").strip()
-        export_report_choice = input("Export report? (y/n): ").strip()
-        export_alerts_choice = input("Export alerts? (y/n): ").strip()
+        export_report_choice = input("Export report? (y/n): ").strip().lower()
+        export_alerts_choice = input("Export alerts? (y/n): ").strip().lower()
 
-        # Call into ReportGenerator + ExportReporter modules
         report = reporter.generate_report(alerts)
 
-        # In demo mode we "export" regardless of choice for now,
-        # but we still capture what user typed.
-        exporter.export(report, out_dir)
+        exported_report_path = None
+        exported_alerts_path = None
+
+        if export_report_choice == "y":
+            exported_report_path = exporter.export_report(report, out_dir)
+
+        if export_alerts_choice == "y":
+            exported_alerts_path = exporter.export_alerts(alerts, out_dir)
+
+        severity_counts = report.get("severity_counts", {})
+        high_count = severity_counts.get("HIGH", 0)
+        medium_count = severity_counts.get("MEDIUM", 0)
+        low_count = severity_counts.get("LOW", 0)
 
         print(f"(CLI) Captured: out_dir='{out_dir}', export_report='{export_report_choice}', export_alerts='{export_alerts_choice}'")
         print("(CLI) Summary Report:")
         print(f"- Total alerts: {report.get('total_alerts', 0)}")
-        print("- HIGH: 5 | MEDIUM: 18 | LOW: 19")
-        print("- Exported report: \n")
+        print(f"- HIGH: {high_count} | MEDIUM: {medium_count} | LOW: {low_count}")
+
+        if report.get("category_counts"):
+            print("- Categories:")
+            for category, count in report["category_counts"].items():
+                print(f"  - {category}: {count}")
+
+        if report.get("rule_counts"):
+            print("- Rules:")
+            for rule_name, count in report["rule_counts"].items():
+                print(f"  - {rule_name}: {count}")
+
+        if exported_report_path:
+            print(f"- Exported report: {exported_report_path}")
+        if exported_alerts_path:
+            print(f"- Exported alerts: {exported_alerts_path}")
+        if not exported_report_path and not exported_alerts_path:
+            print("- No files exported.")
+
+        print()
         self._pause(pause)
         print("\n")
 
