@@ -5,7 +5,7 @@ This module runs detection rules on normalized log events.
 It decides whether any activity looks suspicious and creates alerts.
 """
 
-from soclog.detect.rules import PythonHTTPServerExecutionRule
+from soclog.detect.rules import get_execution_rules
 
 
 class DetectionEngine:
@@ -31,6 +31,6 @@ class DetectionEngine:
         rule_pack = config.get("rule_pack", "").strip().lower()
 
         if rule_pack == "execution":
-            return [PythonHTTPServerExecutionRule()]
+            return get_execution_rules()
 
         return []
