@@ -1,0 +1,17 @@
+type=SYSCALL msg=audit(1604994500.100:92740): arch=c000003e syscall=59 success=yes exit=0 a0=55a1b2c3d4e0 a1=55a1b2c3d500 a2=55a1b2c3d520 a3=8 items=2 ppid=29002 pid=1700 auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts0 ses=104 comm="whoami" exe="/usr/bin/whoami" key=(null)
+type=EXECVE msg=audit(1604994500.100:92740): argc=1 a0="whoami"
+type=CWD msg=audit(1604994500.100:92740): cwd="/home/wardog"
+type=PATH msg=audit(1604994500.100:92740): item=0 name="/usr/bin/whoami" inode=12345 dev=08:01 mode=0100755 ouid=0 ogid=0 rdev=00:00 nametype=NORMAL
+type=PROCTITLE msg=audit(1604994500.100:92740): proctitle=77686F616D69
+
+type=SYSCALL msg=audit(1604994501.200:92741): arch=c000003e syscall=59 success=yes exit=0 a0=55a1b2c3d600 a1=55a1b2c3d620 a2=55a1b2c3d640 a3=8 items=2 ppid=29002 pid=1701 auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts0 ses=104 comm="ls" exe="/usr/bin/ls" key=(null)
+type=EXECVE msg=audit(1604994501.200:92741): argc=2 a0="ls" a1="-la"
+type=CWD msg=audit(1604994501.200:92741): cwd="/home/wardog"
+type=PATH msg=audit(1604994501.200:92741): item=0 name="/usr/bin/ls" inode=12346 dev=08:01 mode=0100755 ouid=0 ogid=0 rdev=00:00 nametype=NORMAL
+type=PROCTITLE msg=audit(1604994501.200:92741): proctitle=6C73002D6C61
+
+type=SYSCALL msg=audit(1604994502.300:92742): arch=c000003e syscall=59 success=yes exit=0 a0=55a1b2c3d700 a1=55a1b2c3d720 a2=55a1b2c3d740 a3=8 items=2 ppid=29002 pid=1702 auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts0 ses=104 comm="grep" exe="/bin/grep" key=(null)
+type=EXECVE msg=audit(1604994502.300:92742): argc=3 a0="grep" a1="-i" a2="root"
+type=CWD msg=audit(1604994502.300:92742): cwd="/home/wardog"
+type=PATH msg=audit(1604994502.300:92742): item=0 name="/bin/grep" inode=12347 dev=08:01 mode=0100755 ouid=0 ogid=0 rdev=00:00 nametype=NORMAL
+type=PROCTITLE msg=audit(1604994502.300:92742): proctitle=67726570002D6900726F6F74

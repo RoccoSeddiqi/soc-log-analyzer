@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
+from email.mime import message
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 
@@ -62,8 +63,6 @@ class NormalizedEvent:
 
 class EventNormalizer:
     """
-    Windows-first normalizer for your current dataset.
-
     mode:
       - "default": coercions, missing fields often become warnings + "unknown"
       - "basic": fewer drops, less strict parsing
@@ -96,28 +95,60 @@ class EventNormalizer:
         "command_line": ["CommandLine"],
     }
 
+    LINUX_ALIASES = {
+        "timestamp": ["@timestamp", "timestamp", "time"],
+        "host": ["host", "hostname", "computer"],
+        "message": ["message", "msg"],
+        "user": ["user", "username"],
+        "process_name": ["process", "process_name", "program"],
+        "application": ["application", "app"],
+        "command_line": ["command_line", "cmdline", "cmd"],
+    }
+
     # Event IDs we already have in sample (need to expand later for organizing for detection rules)
     PROCESS_EVENT_IDS = {"4688"}          # New process created
     NETWORK_EVENT_IDS = {"5156", "5158"}  # Network
     SYSTEM_EVENT_IDS = {"1102"}           # Audit log cleared (system-ish)
 
-    def validate(self, raw_events: Iterable[Any], mode: str = "default") -> ValidationSummary:
+    def validate(self, raw_events: Iterable[Any], mode: str = "default", source: str = "windows") -> ValidationSummary:
         strict = (mode or "default").strip().lower() == "strict"
+        source = (source or "windows").strip().lower()
+
         issues: List[Issue] = []
         total = valid = warn = err = 0
 
         for i, raw in enumerate(raw_events):
             total += 1
+
             if not isinstance(raw, dict):
                 err += 1
                 issues.append(self._issue("error", "INVALID_TYPE", f"Event is not a dict (got {type(raw).__name__}).", i))
                 continue
 
-            event_id = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["event_id"])) or "unknown"
-            event_type = self._event_type_from_event_id(event_id)
+            if source == "windows":
+                event_id = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["event_id"])) or "unknown"
+                event_type = self._event_type_from_event_id(event_id)
 
-            # timestamp
-            ts_val = self._get_first(raw, self.WINDOWS_ALIASES["timestamp"])
+                ts_val = self._get_first(raw, self.WINDOWS_ALIASES["timestamp"])
+                host_val = self._get_first(raw, self.WINDOWS_ALIASES["host"])
+                user_val = self._pick_windows_user(raw)
+                user_required = self._user_required(event_id, event_type)
+
+            elif source == "linux":
+                event_id = "unknown"
+                message = self._to_str(self._get_first(raw, self.LINUX_ALIASES["message"])) or ""
+                event_type = self._linux_event_type_from_message(message)
+
+                ts_val = self._get_first(raw, self.LINUX_ALIASES["timestamp"])
+                host_val = self._get_first(raw, self.LINUX_ALIASES["host"])
+                user_val = self._get_first(raw, self.LINUX_ALIASES["user"])
+                user_required = False
+
+            else:
+                err += 1
+                issues.append(self._issue("error", "UNSUPPORTED_SOURCE", f"Unsupported source: {source}", i))
+                continue
+
             ts_dt = self._parse_timestamp(ts_val)
             if ts_dt is None:
                 if strict:
@@ -127,8 +158,6 @@ class EventNormalizer:
                     warn += 1
                     issues.append(self._issue("warning", "BAD_TIMESTAMP", f"Missing/unparseable timestamp (set to now): {ts_val!r}", i, "timestamp"))
 
-            # host
-            host_val = self._get_first(raw, self.WINDOWS_ALIASES["host"])
             if not self._to_str(host_val):
                 if strict:
                     err += 1
@@ -137,9 +166,6 @@ class EventNormalizer:
                     warn += 1
                     issues.append(self._issue("warning", "MISSING_FIELD", "Missing host (set to 'unknown').", i, "host"))
 
-            # user (conditional)
-            user_val = self._pick_windows_user(raw)
-            user_required = self._user_required(event_id, event_type)
             if user_required and not self._to_str(user_val):
                 if strict:
                     err += 1
@@ -148,7 +174,6 @@ class EventNormalizer:
                     warn += 1
                     issues.append(self._issue("warning", "MISSING_FIELD", "Missing user (set to 'unknown').", i, "user"))
 
-            # in strict mode, count valid only if no errors for this event
             if strict:
                 has_error = any(x.level == "error" and x.event_index == i for x in issues)
                 if not has_error:
@@ -168,12 +193,13 @@ class EventNormalizer:
     ) -> Tuple[List[Dict[str, Any]], NormalizationSummary]:
 
         mode_norm = (mode or "default").strip().lower()
-        strict = (mode_norm == "strict")
-        basic = (mode_norm == "basic")
+        strict = mode_norm == "strict"
+        basic = mode_norm == "basic"
+        source = (source or "windows").strip().lower()
 
         issues: List[Issue] = []
-        total = normalized = dropped = warn = err = 0
         out: List[Dict[str, Any]] = []
+        total = normalized = dropped = warn = err = 0
 
         for i, raw in enumerate(raw_events):
             total += 1
@@ -184,92 +210,126 @@ class EventNormalizer:
                 issues.append(self._issue("error", "INVALID_TYPE", f"Event is not a dict (got {type(raw).__name__}).", i))
                 continue
 
-            event_id = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["event_id"])) or "unknown"
-            event_type = self._event_type_from_event_id(event_id)
+            if source == "windows":
+                event_id = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["event_id"])) or "unknown"
+                event_type = self._event_type_from_event_id(event_id)
 
-            # timestamp
-            ts_val = self._get_first(raw, self.WINDOWS_ALIASES["timestamp"])
-            ts_dt = self._parse_timestamp(ts_val)
-            if ts_dt is None:
-                if strict or (drop_missing and not basic):
+                ts_val = self._get_first(raw, self.WINDOWS_ALIASES["timestamp"])
+                ts_dt = self._parse_timestamp(ts_val)
+                if ts_dt is None:
+                    if strict or (drop_missing and not basic):
+                        dropped += 1
+                        err += 1
+                        issues.append(self._issue("error", "BAD_TIMESTAMP", f"Missing/unparseable timestamp: {ts_val!r}", i, "timestamp"))
+                        continue
+                    warn += 1
+                    issues.append(self._issue("warning", "BAD_TIMESTAMP", f"Missing/unparseable timestamp (set to now): {ts_val!r}", i, "timestamp"))
+                    ts_dt = datetime.now(timezone.utc)
+
+                host_raw = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["host"]))
+                user_raw = self._to_str(self._pick_windows_user(raw))
+
+                host = host_raw or "unknown"
+                user = user_raw or "unknown"
+                message = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["message"])) or ""
+
+                missing_required = False
+
+                if not host_raw:
+                    missing_required = True
+                    issues.append(self._issue("warning", "MISSING_FIELD", "Missing host (set to 'unknown').", i, "host"))
+
+                if self._user_required(event_id, event_type) and not user_raw:
+                    missing_required = True
+                    issues.append(self._issue("warning", "MISSING_FIELD", "Missing user (set to 'unknown').", i, "user"))
+
+                if strict and missing_required:
                     dropped += 1
                     err += 1
-                    issues.append(self._issue("error", "BAD_TIMESTAMP", f"Missing/unparseable timestamp: {ts_val!r}", i, "timestamp"))
                     continue
-                warn += 1
-                issues.append(self._issue("warning", "BAD_TIMESTAMP", f"Missing/unparseable timestamp (set to now): {ts_val!r}", i, "timestamp"))
-                ts_dt = datetime.now(timezone.utc)
 
-            # host
-            host = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["host"])) or ""
-            if not host:
-                if strict or (drop_missing and not basic):
+                if drop_missing and missing_required:
                     dropped += 1
                     err += 1
-                    issues.append(self._issue("error", "MISSING_FIELD", "Missing host.", i, "host"))
                     continue
-                warn += 1
-                issues.append(self._issue("warning", "MISSING_FIELD", "Missing host (set to 'unknown').", i, "host"))
-                host = "unknown"
 
-            # user (conditional)
-            user_val = self._pick_windows_user(raw)
-            user = self._to_str(user_val) or ""
-            user_required = self._user_required(event_id, event_type)
-            if user_required and not user:
-                if strict or (drop_missing and not basic):
-                    dropped += 1
-                    err += 1
-                    issues.append(self._issue("error", "MISSING_FIELD", "Missing user.", i, "user"))
-                    continue
-                warn += 1
-                issues.append(self._issue("warning", "MISSING_FIELD", "Missing user (set to 'unknown').", i, "user"))
-                user = "unknown"
-            elif not user:
-                # user not required -> set unknown silently (no warning)
-                user = "unknown"
+                src_ip = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["src_ip"])) or None
+                dest_ip = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["dest_ip"])) or None
+                src_port = self._to_int(self._get_first(raw, self.WINDOWS_ALIASES["src_port"]))
+                dest_port = self._to_int(self._get_first(raw, self.WINDOWS_ALIASES["dest_port"]))
+                protocol = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["protocol"])) or None
 
-            # message
-            message = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["message"])) or ""
+                process_name = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["process_name"])) or None
+                parent_process_name = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["parent_process_name"])) or None
+                command_line = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["command_line"])) or None
+                application = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["application"])) or None
 
-            # network
-            src_ip = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["src_ip"])) or None
-            dest_ip = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["dest_ip"])) or None
-            src_port = self._to_int(self._get_first(raw, self.WINDOWS_ALIASES["src_port"]))
-            dest_port = self._to_int(self._get_first(raw, self.WINDOWS_ALIASES["dest_port"]))
-            protocol = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["protocol"])) or None
-            application = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["application"])) or None
+                evt = NormalizedEvent(
+                    timestamp=ts_dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+                    source="windows",
+                    event_id=event_id,
+                    event_type=event_type,
+                    host=host,
+                    user=user,
+                    message=message,
+                    src_ip=src_ip,
+                    dest_ip=dest_ip,
+                    src_port=src_port,
+                    dest_port=dest_port,
+                    protocol=protocol,
+                    process_name=process_name,
+                    parent_process_name=parent_process_name,
+                    command_line=command_line,
+                    application=application,
+                    raw=raw if keep_raw else None,
+                )
 
-            # process
-            process_name = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["process_name"])) or None
-            parent_process_name = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["parent_process_name"])) or None
-            command_line = self._to_str(self._get_first(raw, self.WINDOWS_ALIASES["command_line"])) or None
+                out.append(asdict(evt))
+                normalized += 1
+                continue
 
-            evt = NormalizedEvent(
-                timestamp=ts_dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
-                source=source,
-                event_id=event_id,
-                event_type=event_type,
-                host=host,
-                user=user,
-                message=message,
+            if source == "linux":
+                ts_val = self._get_first(raw, self.LINUX_ALIASES["timestamp"])
+                ts_dt = self._parse_timestamp(ts_val)
+                if ts_dt is None:
+                    if strict or (drop_missing and not basic):
+                        dropped += 1
+                        err += 1
+                        issues.append(self._issue("error", "BAD_TIMESTAMP", f"Missing/unparseable timestamp: {ts_val!r}", i, "timestamp"))
+                        continue
+                    warn += 1
+                    issues.append(self._issue("warning", "BAD_TIMESTAMP", f"Missing/unparseable timestamp (set to now): {ts_val!r}", i, "timestamp"))
+                    ts_dt = datetime.now(timezone.utc)
 
-                src_ip=src_ip,
-                dest_ip=dest_ip,
-                src_port=src_port,
-                dest_port=dest_port,
-                protocol=protocol,
+                host = self._to_str(self._get_first(raw, self.LINUX_ALIASES["host"])) or "unknown"
+                message = self._to_str(self._get_first(raw, self.LINUX_ALIASES["message"])) or ""
+                user = self._to_str(self._get_first(raw, self.LINUX_ALIASES["user"])) or "unknown"
+                process_name = self._to_str(self._get_first(raw, self.LINUX_ALIASES["process_name"])) or None
+                application = self._to_str(self._get_first(raw, self.LINUX_ALIASES["application"])) or None
+                command_line = self._to_str(self._get_first(raw, self.LINUX_ALIASES["command_line"])) or None
+                event_type = self._linux_event_type_from_message(message)
 
-                process_name=process_name,
-                parent_process_name=parent_process_name,
-                command_line=command_line,
-                application=application,
+                evt = NormalizedEvent(
+                    timestamp=ts_dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+                    source="linux",
+                    event_id="unknown",
+                    event_type=event_type,
+                    host=host,
+                    user=user,
+                    message=message,
+                    process_name=process_name,
+                    command_line=command_line,
+                    application=application,
+                    raw=raw if keep_raw else None,
+                )
 
-                raw=raw if keep_raw else None,
-            )
+                out.append(asdict(evt))
+                normalized += 1
+                continue
 
-            out.append(asdict(evt))
-            normalized += 1
+            dropped += 1
+            err += 1
+            issues.append(self._issue("error", "UNSUPPORTED_SOURCE", f"Unsupported source: {source}", i))
 
         summary = NormalizationSummary(total, normalized, dropped, warn, err, issues)
         return out, summary
@@ -307,7 +367,19 @@ class EventNormalizer:
         if event_id in self.SYSTEM_EVENT_IDS:
             return True
         return False
+    
+    
+    # Linux helper methods for normalization logic
+    def _linux_event_type_from_message(self, message: str) -> str:
+        msg = (message or "").lower()
 
+        if "sshd" in msg or "failed password" in msg or "accepted password" in msg:
+            return "auth"
+
+        if "sudo" in msg:
+            return "auth"
+
+        return "unknown"
 
 
     # Helper methods for normalization

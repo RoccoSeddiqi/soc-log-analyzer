@@ -12,9 +12,11 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterator, Literal, Optional
+import re
+from datetime import datetime, timezone
 
 
-Format = Literal["json", "jsonl", "csv"]
+Format = Literal["json", "jsonl", "csv", "log"]
 RawRecord = Dict[str, Any]
 
 
@@ -46,6 +48,8 @@ class LogLoader:
             yield from self._load_jsonl(p)
         elif detected == "csv":
             yield from self._load_csv(p)
+        elif detected == "log":
+            yield from self._load_log(p)
         else:
             raise LogValidationError("UNSUPPORTED_FORMAT", f"Unsupported format: {detected}", str(p))
 
@@ -78,6 +82,8 @@ class LogLoader:
             return "jsonl"
         if ext == ".csv":
             return "csv"
+        if ext == ".log":
+            return "log"
 
         # fallback sniff (no extension)
         prefix = p.read_text(encoding="utf-8", errors="ignore")[:2048].lstrip()
@@ -187,3 +193,51 @@ class LogLoader:
 
         except OSError as e:
             raise LogValidationError("CSV_READ_ERROR", f"CSV read failed: {e}", str(p))
+        
+
+    # ------------- LOG (line-based) -------------
+
+    def _load_log(self, p: Path) -> Iterator[RawRecord]:
+        try:
+            with p.open("r", encoding="utf-8", errors="ignore") as f:
+                any_records = False
+
+                for lineno, line in enumerate(f, start=1):
+                    s = line.strip()
+                    if not s:
+                        continue
+
+                    any_records = True
+
+                    event = {
+                        "message": s,
+                        "source": "linux",
+                    }
+
+                    ts_match = re.search(r'audit\((\d+\.\d+):\d+\)', s)
+                    if ts_match:
+                        try:
+                            ts = float(ts_match.group(1))
+                            event["timestamp"] = datetime.fromtimestamp(ts, tz=timezone.utc).isoformat().replace("+00:00", "Z")
+                        except ValueError:
+                            pass
+
+                    comm_match = re.search(r'comm="([^"]+)"', s)
+                    if comm_match:
+                        event["process_name"] = comm_match.group(1)
+
+                    exe_match = re.search(r'exe="([^"]+)"', s)
+                    if exe_match:
+                        event["application"] = exe_match.group(1)
+
+                    args = re.findall(r'a\d+="([^"]+)"', s)
+                    if args:
+                        event["command_line"] = " ".join(args)
+
+                    yield event
+
+                if not any_records:
+                    raise LogValidationError("LOG_EMPTY", "Log file has no usable lines", str(p))
+
+        except OSError as e:
+            raise LogValidationError("LOG_READ_ERROR", f"Log read failed: {e}", str(p))

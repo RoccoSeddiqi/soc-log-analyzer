@@ -5,8 +5,10 @@ This module runs detection rules on normalized log events.
 It decides whether any activity looks suspicious and creates alerts.
 """
 
-from soclog.detect.rules import get_execution_rules
+from sys import platform
 
+from soclog import config
+from soclog.detect.rules import get_windows_rules, get_linux_rules
 
 class DetectionEngine:
     def run(self, events, config):
@@ -28,9 +30,37 @@ class DetectionEngine:
         return alerts
 
     def _select_rules(self, config):
+        platform = config.get("platform", "").strip().lower()
         rule_pack = config.get("rule_pack", "").strip().lower()
 
-        if rule_pack == "execution":
-            return get_execution_rules()
+        # New logic (Linux / Windows split)
+        if platform == "windows":
+            return get_windows_rules()
 
+        if platform == "linux":
+            return get_linux_rules()
+
+        # Set for tests right now, need to properly separate Windows vs Linux rule packs in the future
+        if rule_pack == "windows":
+            return get_windows_rules()
+
+        if rule_pack == "execution":
+            return get_windows_rules()
+        
+        if rule_pack == "credential_access":
+            return get_windows_rules()
+        
+        if rule_pack == "persistence":
+            return get_windows_rules()
+
+        if rule_pack == "linux":
+            return get_linux_rules()
+        
+        if rule_pack == "defense_evasion":
+            return get_linux_rules()
+
+        if rule_pack == "discovery":
+            return get_linux_rules()
+
+        
         return []
