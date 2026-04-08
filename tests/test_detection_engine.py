@@ -17,7 +17,7 @@ def test_detection_engine_execution_pack_returns_alert():
 
     config = {
         "profile": "basic",
-        "rule_pack": "execution",
+        "rule_pack": "windows",
     }
 
     alerts = engine.run(events, config)

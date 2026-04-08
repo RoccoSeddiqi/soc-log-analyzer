@@ -151,7 +151,11 @@ class CLIController:
         # Detection
         self._header("Detection Run")
         profile = input("Select profile (basic/extended): ").strip().lower() or "basic"
-        rule_pack = input("Select rule category (execution/credential_access/etc/): ").strip().lower() or "execution"
+
+        if (source_type == "windows"):
+            rule_pack = input("Select rule category (execution/credential_access/privilege_escalation): ").strip().lower() or "windows"
+        else:
+            rule_pack = input("Select rule category (defense_evasion/discovery): ").strip().lower() or "linux"
 
         config = {"profile": profile, "rule_pack": rule_pack}
         alerts = engine.run(normalized_events, config)
