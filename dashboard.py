@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import plotly.express as px
 from dash import Dash, html, Input, Output, dcc
+import plotly.express as px
 from zipfile import ZipFile
 from io import BytesIO
 
@@ -22,7 +23,17 @@ cred_df = pd.read_json(path_or_buf=datasetJSONPath_cred, lines=True)
 
 dashboard = Dash()
 
-dashboard.layout = html.Div(children=["Dashboard"])
+
+dashboard.layout = html.Div(children=[
+    html.H1(children='Dashboard'),
+
+    html.Div(children='''
+        SIEM Dashboard
+    ''')
+
+    dcc.graph
+
+])
 
 if __name__ == '__main__':
     dashboard.run(debug=True)
