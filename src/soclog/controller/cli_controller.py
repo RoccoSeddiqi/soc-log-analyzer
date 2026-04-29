@@ -1,5 +1,8 @@
 import argparse
 import json
+import os
+import subprocess
+import sys
 
 from soclog.io.log_loader import LogLoader, LogValidationError
 from soclog.normalize.event_normalizer import EventNormalizer
@@ -240,6 +243,19 @@ class CLIController:
         self._pause(pause)
         print("\n")
 
+        open_dashboard = input("Open dashboard? (y/n): ").strip().lower()
+
+        if open_dashboard == "y":
+            report_path = exporter.export_report(report, out_dir)
+            dataset_path = exporter.export_normalized_events(normalized_events, out_dir)
+
+            subprocess.Popen([
+                sys.executable,
+                "src/soclog/dashboard/dashboard.py",
+                report_path,
+                dataset_path
+            ])
+
 
         # Threshold Tuning
         self._header("Threshold Tuning")
@@ -280,3 +296,9 @@ class CLIController:
         print(f"Matched Indicators: {', '.join(alert.get('matched_indicators', []))}")
         print("-" * 60)
         print()
+    
+    def save_report(report_data, output_path="output/report.json"):
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(report_data, f, indent=4)
