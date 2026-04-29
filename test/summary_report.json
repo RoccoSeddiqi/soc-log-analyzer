@@ -1,0 +1,36 @@
+{
+  "total_alerts": 2,
+  "severity_counts": {
+    "HIGH": 2
+  },
+  "category_counts": {
+    "defense_evasion": 2
+  },
+  "rule_counts": {
+    "linux_dd_binary_padding_hash_change": 2
+  },
+  "alerts": [
+    {
+      "rule_name": "linux_dd_binary_padding_hash_change",
+      "severity": "HIGH",
+      "category": "defense_evasion",
+      "summary": "dd-based execution detected",
+      "reason": "dd-based execution detected",
+      "host": "unknown",
+      "user": "unknown",
+      "command_line": null,
+      "event_id": "unknown"
+    },
+    {
+      "rule_name": "linux_dd_binary_padding_hash_change",
+      "severity": "HIGH",
+      "category": "defense_evasion",
+      "summary": "dd-based binary padding behavior detected",
+      "reason": "dd-based binary padding behavior detected",
+      "host": "unknown",
+      "user": "unknown",
+      "command_line": "dd if=/dev/zero bs=1 count=1",
+      "event_id": "unknown"
+    }
+  ]
+}
