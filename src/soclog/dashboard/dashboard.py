@@ -82,7 +82,8 @@ else:
     if not alerts_df.empty:
         preferred_cols = [
             "rule_name", "severity", "category", "host",
-            "user", "event_id", "command_line", "reason"
+            "user", "event_id", "command_line", "reason",
+            "educational_note", "recommended_action"
         ]
         existing_cols = [col for col in preferred_cols if col in alerts_df.columns]
         alerts_df = alerts_df[existing_cols]
@@ -159,7 +160,11 @@ else:
 
     alerts_tab = html.Div(
         [
-            html.H2("Alert Details", style={"color": "white", "marginBottom": "15px"}),
+            html.H2("Alert Details + Analyst Learning Notes", style={"color": "white", "marginBottom": "15px"}),
+            html.P(
+                "Educational notes explain why each alert matters and what an entry-level SOC analyst should check next.",
+                style={"color": "#9CA3AF", "marginBottom": "15px"}
+            ),
             dash_table.DataTable(
                 data=alerts_df.to_dict("records") if not alerts_df.empty else [],
                 columns=[{"name": col, "id": col} for col in alerts_df.columns] if not alerts_df.empty else [],
@@ -285,4 +290,4 @@ else:
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False, host="127.0.0.1", port=8050)

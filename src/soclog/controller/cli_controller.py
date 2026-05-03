@@ -3,6 +3,8 @@ import json
 import os
 import subprocess
 import sys
+import time
+import webbrowser
 
 from soclog.io.log_loader import LogLoader, LogValidationError
 from soclog.normalize.event_normalizer import EventNormalizer
@@ -155,7 +157,7 @@ class CLIController:
         self._header("Detection Run")
         profile = input("Select profile (basic/extended): ").strip().lower() or "basic"
 
-        if (source_type == "windows"):
+        if (src == "windows"):
             rule_pack = input("Select rule category (execution/credential_access/privilege_escalation): ").strip().lower() or "windows"
         else:
             rule_pack = input("Select rule category (defense_evasion/discovery): ").strip().lower() or "linux"
@@ -249,12 +251,23 @@ class CLIController:
             report_path = exporter.export_report(report, out_dir)
             dataset_path = exporter.export_normalized_events(normalized_events, out_dir)
 
+            dashboard_script = os.path.abspath(
+                os.path.join(os.path.dirname(__file__), "..", "dashboard", "dashboard.py")
+            )
+
+            url = "http://127.0.0.1:8050"
+
             subprocess.Popen([
                 sys.executable,
-                "src/soclog/dashboard/dashboard.py",
+                dashboard_script,
                 report_path,
                 dataset_path
             ])
+
+            time.sleep(2)
+            webbrowser.open(url)
+
+            print(f"(CLI) Dashboard opened at: {url}")
 
 
         # Threshold Tuning
