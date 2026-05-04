@@ -59,4 +59,46 @@ attack simulations.
 - Git
 
 ### Setup
-TBD
+1. How to Run
+Clone Repository:
+git clone https://github.com/RoccoSeddiqi/soc-log-analyzer.git
+
+Navigate to the project directory:
+cd soc-log-analyzer
+
+
+2. Install Required Dependencies and Run the program:
+Install required dependencies:
+pip install -r requirements.txt
+
+Then Run: 
+$env:PYTHONPATH="src"
+python -m soclog.main wizard
+
+
+## Sample Data
+Example log files are located in the /data folder.
+You can select either: linux_datasets or windows_datasets
+You can use these to test the system when running the program.
+Ex. data/linux_datasets/defense_evasion/sh_binary_padding_dd_2020-11-10081941.log
+
+
+3. Follow the CLI prompts:
+- Enter log file path
+- Select source type (Windows/Linux)
+- Choose normalization settings
+- Select detection profile and rule category
+- Provide output folder
+- Choose export options
+
+
+Example Workflow
+1. Provide log file path
+2. Logs are loaded and validated
+3. Events are normalized
+4. Detection engine analyzes events
+5. Alerts are generated and displayed
+6. Summary report is created
+7. Results are exported to JSON files
+8. Optional dashboard can be launched
+
